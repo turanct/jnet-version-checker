@@ -11,8 +11,11 @@ class FOSSVersions {
 	// Methods ------------------------------
 	// Constructor
 	public function __construct($project) {
+		// Typecast
+		$project = ucfirst(strtolower((string) $project));
+
 		// Check if the method exists
-		if (method_exists($this, ucfirst((string) $project))) {
+		if (method_exists($this, $project)) {
 			$this->version = $this->$project();
 		}
 	}
