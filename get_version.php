@@ -77,7 +77,7 @@ class FOSSVersions {
 
 
 	// Helper Methods -----------------------
-	// Method to get the version number or false
+	// Method to get the version number array or false
 	private function version($url, $match) {
 		// Match
 		$match = $this->match($match, @file_get_contents($url));
@@ -126,7 +126,7 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) {
 	}
 
 
-	// Create new IMDbToons instance
+	// Create new FOSSVersions instance
 	$versions = new FOSSVersions($keyword);
 
 	// Print
