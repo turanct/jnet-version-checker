@@ -57,8 +57,8 @@ class FOSSVersions {
 	// Method to get latest Drupal version
 	private function Drupal() {
 		// Method vars
-		$url = 'https://drupal.org/download';
-		$match = '/<span>Download\sDrupal\s([\d\.]*)<\/span>/i';
+		$url = 'https://drupal.org/project/drupal';
+		$match = '/<tr.*?release\-update\-status\-0.*?>[\s\t\n]*?<td.*?views\-field\-version.*?>[\s\t\n]*?<a.*?>([\d\.]*)<\/a>/i';
 
 		// Return
 		return $this->version($url, $match);
