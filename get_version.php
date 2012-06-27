@@ -147,7 +147,7 @@ class FOSSVersions {
 
 // Run the class if we're not included
 if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) {
-	if (isset($argv)) {
+	if (isset($argv) && isset($argv[1])) {
 		// Get argv
 		$a = $argv;
 		// Options (nr. 1 = keyword)
