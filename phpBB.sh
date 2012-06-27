@@ -7,7 +7,7 @@ do
 	config=`echo $file | sed -e "s/viewforum\.php/config.php/g"`
 
 	# Get connection details
-	host=`cat $config | grep "dbhost" | awk -F " = '" '{print $2}' | sed -e "s/';//g"`
+	host=`cat $config | grep "\\$dbhost" | awk -F " = '" '{print $2}' | sed -e "s/';//g"`
 	dbname=`cat $config | grep "\\$dbname" | awk -F " = '" '{print $2}' | sed -e "s/';//g"`
 	dbuser=`cat $config | grep "\\$dbuser" | awk -F " = '" '{print $2}' | sed -e "s/';//g"`
 	dbpass=`cat $config | grep "\\$dbpasswd" | awk -F " = '" '{print $2}' | sed -e "s/';//g"`
