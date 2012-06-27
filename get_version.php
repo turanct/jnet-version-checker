@@ -57,8 +57,8 @@ class FOSSVersions {
 	// Method to get latest Drupal version
 	private function Drupal() {
 		// Method vars
-		$url = 'https://drupal.org/download';
-		$match = '/<span>Download\sDrupal\s([\d\.]*)<\/span>/i';
+		$url = 'https://drupal.org/project/drupal';
+		$match = '/<tr.*?release\-update\-status\-0.*?>[\s\t\n]*?<td.*?views\-field\-version.*?>[\s\t\n]*?<a.*?>([\d\.]*)<\/a>/i';
 
 		// Return
 		return $this->version($url, $match);
@@ -70,6 +70,39 @@ class FOSSVersions {
 		// Method vars
 		$url = 'http://www.phpbb.com/';
 		$match = '/<span\sclass\=\"version\">([\d\.]*)<\/span>/i';
+
+		// Return
+		return $this->version($url, $match);
+	}
+
+
+	// Method to get latest CMS Made Simple version
+	private function Cmsmadesimple() {
+		// Method vars
+		$url = 'http://www.cmsmadesimple.org/downloads/';
+		$match = '/<span\sclass\=\"greent\">.*?Version\:\s([\d\.]*)<\/span>/i';
+
+		// Return
+		return $this->version($url, $match);
+	}
+
+
+	// Method to get latest MediaWiki version
+	private function Mediawiki() {
+		// Method vars
+		$url = 'https://www.mediawiki.org/wiki/Download';
+		$match = '/<a\s.*?class\=\"extiw\".*?>Download\sMediaWiki\s([\d\.]*)<\/a>/i';
+
+		// Return
+		return $this->version($url, $match);
+	}
+
+
+	// Method to get latest Fork CMS version
+	private function Forkcms() {
+		// Method vars
+		$url = 'http://www.fork-cms.com/download';
+		$match = '/<a\shref.*?github.*?>Fork\sCMS\s([\d\.]*)<\/a>/i';
 
 		// Return
 		return $this->version($url, $match);
