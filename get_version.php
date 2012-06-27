@@ -158,7 +158,7 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) {
 		$keyword = $_GET['s'];
 	}
 	else {
-		die('No parameters.');
+		die('No parameters.'."\n");
 	}
 
 
