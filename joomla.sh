@@ -1,24 +1,4 @@
 #!/bin/sh
-if [[ -n $1 ]]; then
-latestRelease=$1
-else
-latestRelease="2.6.4"
-fi
-
-if [[ -n $2 ]]; then
-latestOldRelease=$2
-else
-latestOldRelease="1.5.27"
-fi
-
-left=`echo $latestRelease | awk -F '.' '{ print $1 }'`
-middle=`echo $latestRelease | awk -F '.' '{ print $2 }'`
-right=`echo $latestRelease | awk -F '.' '{ print $3 }'`
-
-leftOld=`echo $latestOldRelease | awk -F '.' '{ print $1 }'`
-middleOld=`echo $latestOldRelease | awk -F '.' '{ print $2 }'`
-rightOld=`echo $latestOldRelease | awk -F '.' '{ print $3 }'`
-
 
 for file in `locate libraries/joomla/version.php`
 do
