@@ -5,8 +5,8 @@
 for domain in `locate modules/gallery/helpers/gallery.php`
 do
 	domain2=`echo $domain | awk -F "modules/gallery/helpers/gallery.php" '{print $1}'`
-	echo $domain2
-	cat $domain  | grep -E "const VERSION" | awk -F " VERSION = \"" '{print $2}' | awk -F "\";"  '{print $1}'
+	version=`cat $domain  | grep -E "const VERSION" | awk -F " VERSION = \"" '{print $2}' | awk -F "\";"  '{print $1}'`
+	echo "$version $domain2"
 done
 
 
@@ -15,11 +15,10 @@ done
 for domain in `locate modules/core/AdminCore.inc`
 do
 	domain=`echo $domain | awk -F "modules/core/AdminCore.inc" '{print $1}'`
-	echo $domain
 	for versionfile in `locate versions.dat | grep "$domain"`
 	do
 		version=`tail -1 $versionfile`
-		echo "$version"
+		echo "$version $domain"
 	done
 	#hostname=`cat ${domain}config.php | grep "storeConfig" | grep "hostname" | awk -F "= '" '{print $2}' | awk -F "';" '{print $1}'`
 	#database=`cat ${domain}config.php | grep "storeConfig" | grep "database" | awk -F "= '" '{print $2}' | awk -F "';" '{print $1}'`
