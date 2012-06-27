@@ -153,9 +153,12 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) {
 		// Options (nr. 1 = keyword)
 		$keyword = $a[1];
 	}
-	else {
+	elseif(isset($_GET) && isset($_GET['s'])) {
 		// Get GET data
 		$keyword = $_GET['s'];
+	}
+	else {
+		die('No parameters.');
 	}
 
 
