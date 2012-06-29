@@ -88,7 +88,7 @@ class VersionChecker {
 		exec($package.'.sh', $output);
 
 		// Return with correct output
-		if (!isset($output) || !empty($output)) {
+		if (!isset($output) || empty($output)) {
 			// Throw Exception
 			$this->exception('Did not get any output from '.$package.'.sh');
 
