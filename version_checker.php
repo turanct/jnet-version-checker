@@ -22,11 +22,15 @@ class VersionChecker {
 	 *
 	 * @param string		$keyword		The package we want to inspect
 	 * @param array			$list			The list with possible packages
+	 * @param array			$actions		A list of actions to handle after checking the versions
 	 */
-	public function __construct($keyword = false, $list = array()) {
+	public function __construct($keyword = false, $list = array(), $actions) {
 		// Typecast
 		$this->keyword = ($keyword !== false) ? (array) $keyword : false ;
 		$this->list = (array) $list;
+		$this->actions = (array) $actions;
+
+		// Prepare
 		$this->versions = new stdClass();
 
 		// Begin!
@@ -241,7 +245,7 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) {
 	$keyword = array_merge($keyword);
 
 	// Create new VersionChecker instance
-	$VersionChecker = new VersionChecker($keyword, $list);
+	$VersionChecker = new VersionChecker($keyword, $list, array('old', 'uptodate'));
 
 	// Newline
 	echo "\n";
