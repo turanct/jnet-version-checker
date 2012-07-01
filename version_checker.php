@@ -12,7 +12,7 @@ class VersionChecker {
 	private $exceptions = true;
 	private $keyword;
 	private $list;
-	private $versions = new stdClass();
+	private $versions;
 
 
 	// Methods ------------------------------
@@ -24,8 +24,9 @@ class VersionChecker {
 	 */
 	public function __construct($keyword = false, $list = array()) {
 		// Typecast
-		$this->keyword = ($keyword !== false) ? (string) $keyword : false ;
+		$this->keyword = ($keyword !== false) ? (array) $keyword : false ;
 		$this->list = (array) $list;
+		$this->versions = new stdClass();
 
 		// Begin!
 		$this->Walk();
@@ -42,7 +43,7 @@ class VersionChecker {
 		}
 
 		// Walk through keywords
-		foreach ((array) $keyword as $key => $value) {
+		foreach ((array) $this->keyword as $key => $value) {
 			// Check if we can work with this keyword
 			if (!in_array($value, $this->list)) {
 				// Throw Exception
@@ -85,7 +86,7 @@ class VersionChecker {
 		}
 
 		// Run the package script
-		exec($package.'.sh', $output);
+		exec('./'.$package.'.sh', $output);
 
 		// Return with correct output
 		if (!isset($output) || empty($output)) {
@@ -98,7 +99,7 @@ class VersionChecker {
 
 		// Process lines
 		foreach ((array) $output as $key => $value) {
-			$parts = preg_split(/(?!^[\d\.]*)\s/i, $value);
+			$parts = preg_split('/(?!^[\d\.]*)\s/i', $value);
 			$output[$key] = new stdClass();
 			$output[$key]->version = $parts[0];
 			$output[$key]->path = $parts[1];
@@ -127,7 +128,7 @@ class VersionChecker {
 		// Walk through output
 		foreach ($output as $key => $value) {
 			// If the version is not the same as the current one, it must be older
-			if (!in_array($value->version, $current) {
+			if (!in_array($value->version, $current)) {
 				$this->ListOld[] = $value;
 			}
 			else {
@@ -209,7 +210,7 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) {
 	$keyword = array_merge($keyword);
 
 	// Create new VersionChecker instance
-	$VersionChecker = new VersionChecker($keyword);
+	$VersionChecker = new VersionChecker($keyword, $list);
 
 	// Newline
 	echo "\n";
