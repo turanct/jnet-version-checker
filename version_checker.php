@@ -122,8 +122,8 @@ class VersionChecker {
 		$output = (array) $output;
 
 		// Prepare arrays
-		$ListOld = array();
-		$ListUpToDate = array();
+		$this->ListOld = array();
+		$this->ListUpToDate = array();
 
 		// Walk through output
 		foreach ($output as $key => $value) {
@@ -137,7 +137,7 @@ class VersionChecker {
 		}
 
 		// Return
-		return array('old' => $ListOld, 'upToDate' => $ListUpToDate);
+		return array('old' => $this->ListOld, 'upToDate' => $this->ListUpToDate);
 	}
 
 
