@@ -13,6 +13,7 @@ class VersionChecker {
 	private $keyword;
 	private $list;
 	private $versions;
+	private $actions;
 
 
 	// Methods ------------------------------
@@ -101,6 +102,7 @@ class VersionChecker {
 		foreach ((array) $output as $key => $value) {
 			$parts = preg_split('/(?!^[\d\.]*)\s/i', $value);
 			$output[$key] = new stdClass();
+			$output[$key]->package = $package;
 			$output[$key]->version = $parts[0];
 			$output[$key]->path = $parts[1];
 		}
@@ -115,6 +117,7 @@ class VersionChecker {
 	 *
 	 * @param array		$current	The current version number
 	 * @param array		$output		A list of output from a .sh file
+	 * @return array				An array of two arrays: 'old' and 'upToDate'
 	 */
 	private function Compare($current, $output) {
 		// Typecast
@@ -142,12 +145,40 @@ class VersionChecker {
 
 
 	/**
-	 * TODO: Method to do some actions after detection
+	 * Method to do some actions after detection
 	 *
-	 * @todo Create this method
+	 * @todo Emails
 	 */
 	private function Actions() {
-		
+		// TODO - Email
+
+		// Display Old
+		if (in_array('old', $this->actions)) {
+			if (isset($this->ListOld)) {
+				// Echo title
+				echo '[+] Not up to date:' . "\n";
+
+				// Walk through elements
+				foreach ((array) $this->ListOld as $key => $value) {
+					echo "\t" . $value->package . "\n";
+					echo "\t" . '[ ' . $value->version . ' ] ' . $value->path . "\n\n";
+				}
+			}
+		}
+
+		// Display Up To Date
+		if (in_array('uptodate', $this->actions)) {
+			if (isset($this->ListUpToDate)) {
+				// Echo title
+				echo '[+] Up to date:' . "\n";
+
+				// Walk through elements
+				foreach ((array) $this->ListUpToDate as $key => $value) {
+					echo "\t" . $value->package . "\n";
+					echo "\t" . '[ ' . $value->version . ' ] ' . $value->path . "\n\n";
+				}
+			}
+		}
 	}
 
 
