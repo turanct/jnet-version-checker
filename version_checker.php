@@ -158,7 +158,7 @@ class VersionChecker {
 
 		// Display Old
 		if (in_array('old', $this->actions)) {
-			if (isset($this->ListOld)) {
+			if (isset($this->ListOld) && !empty($this->ListOld)) {
 				// Echo title
 				echo '[+] Not up to date:' . "\n";
 
@@ -172,7 +172,7 @@ class VersionChecker {
 
 		// Display Up To Date
 		if (in_array('uptodate', $this->actions)) {
-			if (isset($this->ListUpToDate)) {
+			if (isset($this->ListUpToDate) && !empty($this->ListUpToDate)) {
 				// Echo title
 				echo '[+] Up to date:' . "\n";
 
