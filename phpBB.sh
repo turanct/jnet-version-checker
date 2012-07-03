@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Locate wp-includes/version.php
+# Locate phpBB viewforum.php
 for file in `locate viewforum.php | grep -v "language"`
 do
 	# Get phpBB config file path
@@ -17,5 +17,5 @@ do
 	InstalledVersion=`mysql -u $dbuser -D $dbname -p$dbpass -h $host --skip-column-names -e "select config_value from ${dbprefix}config config where config_name='version';" | grep '[\d\.]*'`
 
 	# Output
-	echo "$InstalledVersion $config"
+	echo "$InstalledVersion $config" | sed -e "s/config.php//g"
 done
