@@ -71,7 +71,7 @@ class VersionChecker {
 			$installed = $this->runLookup($value);
 
 			// Compare
-			$this->Compare($this->versions->{$value}, $installed);
+			$this->Compare($value, $installed);
 		}
 
 		// Actions
