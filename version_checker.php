@@ -15,6 +15,9 @@ class VersionChecker {
 	private $versions;
 	private $actions;
 
+	public $ListOld;
+	public $ListUpToDate;
+
 
 	// Methods ------------------------------
 	/**
@@ -32,6 +35,8 @@ class VersionChecker {
 
 		// Prepare
 		$this->versions = new stdClass();
+		$this->ListOld = new stdClass();
+		$this->ListUpToDate = new stdClass();
 
 		// Begin!
 		$this->Walk();
@@ -67,10 +72,10 @@ class VersionChecker {
 
 			// Compare
 			$this->Compare($this->versions->{$value}, $installed);
-
-			// Actions
-			$this->Actions();
 		}
+
+		// Actions
+		$this->Actions();
 	}
 
 
@@ -119,32 +124,35 @@ class VersionChecker {
 	/**
 	 * Method to Compare a list of .sh output to the known last version
 	 *
-	 * @param array		$current	The current version number
+	 * @param string		$current	The current version name
 	 * @param array		$output		A list of output from a .sh file
 	 * @return array				An array of two arrays: 'old' and 'upToDate'
 	 */
 	private function Compare($current, $output) {
 		// Typecast
-		$current = (array) $current;
+		$current = (string) $current;
 		$output = (array) $output;
 
+		// Get current version
+		$currentVersion = $this->versions->{$current};
+
 		// Prepare arrays
-		$this->ListOld = array();
-		$this->ListUpToDate = array();
+		$this->ListOld->{$current} = array();
+		$this->ListUpToDate->{$current} = array();
 
 		// Walk through output
 		foreach ($output as $key => $value) {
 			// If the version is not the same as the current one, it must be older
-			if (!in_array($value->version, $current)) {
-				$this->ListOld[] = $value;
+			if (!in_array($value->version, $currentVersion)) {
+				$this->ListOld->{$current}[] = $value;
 			}
 			else {
-				$this->ListUpToDate[] = $value;
+				$this->ListUpToDate->{$current}[] = $value;
 			}
 		}
 
 		// Return
-		return array('old' => $this->ListOld, 'upToDate' => $this->ListUpToDate);
+		return array('old' => $this->ListOld->{$current}, 'upToDate' => $this->ListUpToDate->{$current});
 	}
 
 
@@ -155,6 +163,15 @@ class VersionChecker {
 	 */
 	private function Actions() {
 		// TODO - Email
+
+		// JSON all
+		if (in_array('json', $this->actions)) {
+			// Prepare
+			$data = (object) array('upToDate' => $this->ListUpToDate, 'old' => $this->ListOld);
+
+			// Encode + Output
+			echo json_encode($data);
+		}
 
 		// Display Old
 		if (in_array('old', $this->actions)) {
