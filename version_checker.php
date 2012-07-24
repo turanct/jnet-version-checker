@@ -167,7 +167,25 @@ class VersionChecker {
 		// JSON all
 		if (in_array('json', $this->actions)) {
 			// Prepare
-			$data = (object) array('upToDate' => $this->ListUpToDate, 'old' => $this->ListOld);
+			$data = array();
+
+			// Add up to date
+			foreach ($this->ListUpToDate as $key => $value) {
+				// Add found packages
+				foreach ((array) $value as $package) {
+					$package->uptodate = 1;
+					$data[] = $package;
+				}
+			}
+
+			// Add old
+			foreach ($this->ListOld as $key => $value) {
+				// Add found packages
+				foreach ((array) $value as $package) {
+					$package->uptodate = 0;
+					$data[] = $package;
+				}
+			}
 
 			// Encode + Output
 			echo json_encode($data);
@@ -262,7 +280,7 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])) {
 	$keyword = array_merge($keyword);
 
 	// Create new VersionChecker instance
-	$VersionChecker = new VersionChecker($keyword, $list, array('old', 'uptodate'));
+	$VersionChecker = new VersionChecker($keyword, $list, array('json'));
 
 	// Newline
 	echo "\n";
