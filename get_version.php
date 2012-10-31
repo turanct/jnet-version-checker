@@ -36,7 +36,7 @@ class FOSSVersions {
 	private function Joomla() {
 		// Method vars
 		$url = 'http://www.joomla.org/download.html';
-		$match = '/<td width="265">([\d\.]*)\sFull\sPackage<\/td>/i';
+		$match = '/<span class="subline">.*?([\d\.]*)\sFull\sPackage.*?<\/span>/i';
 
 		// Return
 		return $this->version($url, $match);
